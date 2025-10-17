@@ -1,6 +1,10 @@
 import Gun from 'gun'
-import fetch from 'node-fetch'
 import getUrls from 'get-urls'
+
+// Use native fetch in browser or node-fetch in Node.js if needed
+const fetchImpl = typeof window !== 'undefined' ? window.fetch : 
+  (typeof global.fetch !== 'undefined' ? global.fetch : 
+    (async () => (await import('node-fetch')).default)())
 
 // Suppress extraneous GUN logging
 let cl = console.log
@@ -8,8 +12,11 @@ console.log = () => {}
 
 // if gun has no results, fetch them from github & update gun
 async function fetchRelays() {
+  // Ensure fetch is available
+  const myFetch = typeof fetchImpl === 'function' ? fetchImpl : await fetchImpl
+  
   let tmpRelays = []
-  let res = await fetch(
+  let res = await myFetch(
     'https://raw.githubusercontent.com/wiki/amark/gun/volunteer.dht.md'
   )
   let data = await res.text()
