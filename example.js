@@ -1,11 +1,16 @@
 import Relays from './index.js'
-import Gun from 'gun'
+import { ShogunCore } from 'shogun-core'
 
 let relays = await Relays()
 
 console.log(relays)
 
-let gun = new Gun({peers: relays})
+let shogun = new ShogunCore({
+  gunOptions: {
+    peers: relays,
+  }
+})
 
+let gun = shogun.gun;
 
 

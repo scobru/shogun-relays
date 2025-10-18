@@ -1,6 +1,5 @@
-import Gun from 'gun'
-import { ShogunCore } from 'shogun-core'
-import getUrls from 'get-urls'
+const { ShogunCore } = require('shogun-core')
+const getUrls = require('get-urls')
 
 // Use native fetch in browser or node-fetch in Node.js if needed
 const fetchImpl = typeof window !== 'undefined' ? window.fetch : 
@@ -68,14 +67,14 @@ const Relays = async () => {
   return gunRelays
 }
 
-export const forceListUpdate = async () => {
+const forceListUpdate = async () => {
   let shogun = new ShogunCore({
     gunOptions: {
       peers: ['https://relay.shogun-eco.xyz', 'https://peer.wallie.io/gun'],
       file: 'gun-relays',
     }
   })
-  
+
   let gun = shogun.gun;
 
   const newRelays = await fetchRelays()
@@ -88,4 +87,6 @@ export const forceListUpdate = async () => {
   return newRelays
 }
 
-export default Relays
+module.exports = Relays
+module.exports.forceListUpdate = forceListUpdate
+
