@@ -1,14 +1,29 @@
 {
   "name": "shogun-relays",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "Returns volunteer GUN relays for use in your decentralized apps.",
+  "keywords": [
+    "gundb",
+    "gunjs",
+    "p2p",
+    "dapps",
+    "decentralization",
+    "dht"
+  ],
+  "homepage": "https://github.com/scobru/shogun-relays#readme",
+  "bugs": {
+    "url": "https://github.com/scobru/shogun-relays/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scobru/shogun-relays.git"
+  },
+  "license": "MIT",
+  "author": "Scobru",
+  "type": "module",
   "main": "index.js",
   "browser": "browser.js",
   "types": "index.d.ts",
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "files": [
     "index.js",
     "index.d.ts",
@@ -18,28 +33,13 @@
     "LICENSE",
     "README.md"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/scobru/shogun-relays.git"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Scobru",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/scobru/shogun-relays/issues"
-  },
-  "homepage": "https://github.com/scobru/shogun-relays#readme",
   "dependencies": {
     "get-urls": "^10.0.1",
     "node-fetch": "^3.1.0",
     "shogun-core": "^3.3.8"
   },
-  "devDependencies": {},
-  "keywords": [
-    "gundb",
-    "gunjs",
-    "p2p",
-    "dapps",
-    "decentralization",
-    "dht"
-  ]
+  "devDependencies": {}
 }
