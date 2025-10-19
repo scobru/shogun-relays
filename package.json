@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "Returns volunteer GUN relays for use in your decentralized apps.",
   "main": "index.js",
+  "types": "index.d.ts",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
