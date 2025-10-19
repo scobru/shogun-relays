@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shogun Relays - Browser Example</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #1a1a1a;
+      color: #e0e0e0;
+    }
+    
+    h1 {
+      color: #4CAF50;
+      border-bottom: 2px solid #4CAF50;
+      padding-bottom: 10px;
+    }
+    
+    h2 {
+      color: #2196F3;
+      margin-top: 30px;
+    }
+    
+    .button-group {
+      margin: 20px 0;
+    }
+    
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      margin: 5px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+    
+    button:hover {
+      background: #45a049;
+    }
+    
+    button:disabled {
+      background: #666;
+      cursor: not-allowed;
+    }
+    
+    .info-box {
+      background: #2d2d2d;
+      border-left: 4px solid #2196F3;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    
+    .relay-list {
+      background: #2d2d2d;
+      padding: 15px;
+      border-radius: 4px;
+      margin: 10px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .relay-item {
+      padding: 5px 0;
+      border-bottom: 1px solid #444;
+    }
+    
+    .relay-item:last-child {
+      border-bottom: none;
+    }
+    
+    .status {
+      padding: 8px 16px;
+      border-radius: 4px;
+      margin: 10px 0;
+      font-weight: 500;
+    }
+    
+    .status.loading {
+      background: #FFA726;
+      color: #000;
+    }
+    
+    .status.success {
+      background: #4CAF50;
+      color: white;
+    }
+    
+    .status.error {
+      background: #f44336;
+      color: white;
+    }
+    
+    pre {
+      background: #2d2d2d;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 13px;
+    }
+    
+    code {
+      color: #4CAF50;
+    }
+  </style>
+</head>
+<body>
+  <h1>Shogun Relays - Browser Example</h1>
+  
+  <div class="info-box">
+    <strong>What is this?</strong>
+    <p>This page demonstrates how to use Shogun Relays in a browser environment using CDN. 
+    It fetches a list of volunteer GUN relay servers that you can use in your decentralized applications.</p>
+  </div>
+  
+  <h2>Actions</h2>
+  <div class="button-group">
+    <button id="getRelaysBtn">Get Relays</button>
+    <button id="forceUpdateBtn">Force Update from GitHub</button>
+    <button id="testGunBtn" disabled>Test Gun Connection</button>
+  </div>
+  
+  <div id="status"></div>
+  
+  <h2>Relay List</h2>
+  <div id="relayList" class="relay-list">
+    <em>Click "Get Relays" to load the relay list...</em>
+  </div>
+  
+  <h2>Usage Example</h2>
+  <pre><code>&lt;!-- Load Gun from CDN --&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/gun/gun.js"&gt;&lt;/script&gt;
+
+&lt;!-- Load Shogun Relays --&gt;
+&lt;script src="browser.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+  // Get relays and initialize Gun
+  ShogunRelays.getRelays().then(relays => {
+    console.log('Available relays:', relays)
+    
+    // Initialize Gun with the relay list
+    const gun = Gun({peers: relays})
+    
+    // Use Gun as usual
+    gun.get('test').put({message: 'Hello, decentralized world!'})
+  })
+  
+  // Force update from GitHub
+  ShogunRelays.forceListUpdate().then(relays => {
+    console.log('Fresh relays from GitHub:', relays)
+  })
+&lt;/script&gt;</code></pre>
+
+  <h2>Options</h2>
+  <pre><code>// Get relays with custom options
+ShogunRelays.getRelays({
+  peers: ['https://custom-peer.com/gun'],  // Custom initial peers
+  timeout: 3000,                            // Timeout for Gun network query (ms)
+  localStorage: true,                       // Use localStorage for Gun
+  radisk: true,                             // Use radisk for Gun
+  verbose: false                            // Show console logs
+}).then(relays => {
+  console.log(relays)
+})</code></pre>
+
+  <!-- Load Gun from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+  
+  <!-- Load Shogun Relays -->
+  <script src="browser.js"></script>
+  
+  <script>
+    let currentRelays = [];
+    let gun = null;
+    
+    const statusDiv = document.getElementById('status');
+    const relayListDiv = document.getElementById('relayList');
+    const getRelaysBtn = document.getElementById('getRelaysBtn');
+    const forceUpdateBtn = document.getElementById('forceUpdateBtn');
+    const testGunBtn = document.getElementById('testGunBtn');
+    
+    function showStatus(message, type) {
+      statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+    }
+    
+    function displayRelays(relays) {
+      if (!relays || relays.length === 0) {
+        relayListDiv.innerHTML = '<em>No relays found</em>';
+        return;
+      }
+      
+      relayListDiv.innerHTML = relays.map((relay, index) => 
+        `<div class="relay-item">${index + 1}. ${relay}</div>`
+      ).join('');
+    }
+    
+    async function getRelays() {
+      getRelaysBtn.disabled = true;
+      showStatus('Loading relays...', 'loading');
+      
+      try {
+        const relays = await ShogunRelays.getRelays({verbose: true});
+        currentRelays = relays;
+        
+        showStatus(`Successfully loaded ${relays.length} relays`, 'success');
+        displayRelays(relays);
+        testGunBtn.disabled = false;
+      } catch (error) {
+        showStatus(`Error: ${error.message}`, 'error');
+        console.error('Error getting relays:', error);
+      } finally {
+        getRelaysBtn.disabled = false;
+      }
+    }
+    
+    async function forceUpdate() {
+      forceUpdateBtn.disabled = true;
+      showStatus('Fetching fresh relays from GitHub...', 'loading');
+      
+      try {
+        const relays = await ShogunRelays.forceListUpdate();
+        currentRelays = relays;
+        
+        showStatus(`Successfully updated! Found ${relays.length} relays`, 'success');
+        displayRelays(relays);
+        testGunBtn.disabled = false;
+      } catch (error) {
+        showStatus(`Error: ${error.message}`, 'error');
+        console.error('Error forcing update:', error);
+      } finally {
+        forceUpdateBtn.disabled = false;
+      }
+    }
+    
+    function testGunConnection() {
+      if (currentRelays.length === 0) {
+        showStatus('Please load relays first', 'error');
+        return;
+      }
+      
+      showStatus('Testing Gun connection...', 'loading');
+      
+      try {
+        gun = Gun({peers: currentRelays});
+        
+        // Test write and read
+        const testKey = 'shogun-relays-test-' + Date.now();
+        gun.get(testKey).put({
+          message: 'Test message',
+          timestamp: Date.now()
+        }, (ack) => {
+          if (ack.err) {
+            showStatus('Gun connection test failed: ' + ack.err, 'error');
+          } else {
+            showStatus('Gun connection successful! Data written to network.', 'success');
+          }
+        });
+      } catch (error) {
+        showStatus(`Error: ${error.message}`, 'error');
+        console.error('Error testing Gun:', error);
+      }
+    }
+    
+    getRelaysBtn.addEventListener('click', getRelays);
+    forceUpdateBtn.addEventListener('click', forceUpdate);
+    testGunBtn.addEventListener('click', testGunConnection);
+    
+    // Auto-load relays on page load
+    window.addEventListener('load', () => {
+      console.log('Shogun Relays example loaded');
+      console.log('ShogunRelays API:', ShogunRelays);
+    });
+  </script>
+</body>
+</html>
+
