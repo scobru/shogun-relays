@@ -27,7 +27,7 @@
   async function fetchRelaysFromGitHub() {
     try {
       const response = await fetch(
-        'https://raw.githubusercontent.com/wiki/amark/gun/volunteer.dht.md'
+        'https://raw.githubusercontent.com/scobru/shogun-relays/main/volunteer.dht.md'
       );
       const data = await response.text();
       const urls = extractUrls(data);
@@ -55,7 +55,6 @@
   // Get relays from GUN network or GitHub
   async function getRelays(options = {}) {
     const defaultPeers = options.peers || [
-      'https://relay.shogun-eco.xyz/gun',
       'https://peer.wallie.io/gun'
     ];
     

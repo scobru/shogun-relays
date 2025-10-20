@@ -18,7 +18,7 @@ async function fetchRelays() {
   
   let tmpRelays = []
   let res = await myFetch(
-    'https://raw.githubusercontent.com/wiki/amark/gun/volunteer.dht.md'
+    'https://raw.githubusercontent.com/scobru/shogun-relays/main/volunteer.dht.md'
   )
   let data = await res.text()
   let urls = getUrls(data)
