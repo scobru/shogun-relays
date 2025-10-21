@@ -3,8 +3,8 @@
 * https://gundb-relay-mlccl.ondigitalocean.app/gun
 * https://plankton-app-6qfp3.ondigitalocean.app/
 * https://gun.defucc.me/gun
-* https://v5g5jseqhgkp43lppgregcfbvi.srv.us/gun
-* https://5eh4twk2f62autunsje4panime.srv.us/gun
+* https://lindanode.scobrudot.dev/gun
+* https://shogunnode.scobrudot.dev/gun
 
 NOTE: IF YOU HAVE ANY RELAYS PLEASE EDIT THIS PAGE AND INFORM SO IT WILL BE VERY HELPFUL
 
