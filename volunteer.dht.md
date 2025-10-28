@@ -5,7 +5,6 @@
 - https://gun.defucc.me/gun
 - https://lindanode.scobrudot.dev/gun
 - https://shogunnode.scobrudot.dev/gun
-- https://shogunnode2.scobrudot.dev/gun
 
 NOTE: IF YOU HAVE ANY RELAYS PLEASE EDIT THIS PAGE AND INFORM SO IT WILL BE VERY HELPFUL
 
