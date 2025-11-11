@@ -2,6 +2,13 @@ import Gun from 'gun'
 import { ShogunCore } from 'shogun-core'
 import getUrls from 'get-urls'
 
+const DEFAULT_PEERS = [
+  'https://5eh4twk2f62autunsje4panime.srv.us/gun',
+  'https://peer.wallie.io/gun',
+  'https://g3ru5bwxmezpuu3ktnoclbpiw4.srv.us/gun',
+  'https://ojepkbvhx4ok25py2qw4hsa76y.srv.us/gun',
+]
+
 // Use native fetch in browser or node-fetch in Node.js if needed
 const fetchImpl = typeof window !== 'undefined' ? window.fetch : 
   (typeof global.fetch !== 'undefined' ? global.fetch : 
@@ -40,7 +47,7 @@ const Relays = async () => {
 
   let shogun = new ShogunCore({
     gunOptions: {
-      peers: ['https://relay.shogun-eco.xyz', 'https://peer.wallie.io/gun'],
+      peers: DEFAULT_PEERS,
       file: 'gun-relays',
     }
   })
@@ -71,7 +78,7 @@ const Relays = async () => {
 export const forceListUpdate = async () => {
   let shogun = new ShogunCore({
     gunOptions: {
-      peers: ['https://relay.shogun-eco.xyz', 'https://peer.wallie.io/gun'],
+      peers: DEFAULT_PEERS,
       file: 'gun-relays',
     }
   })
