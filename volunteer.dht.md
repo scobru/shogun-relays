@@ -1,10 +1,4 @@
 - https://peer.wallie.io/gun
 - https://gun.defucc.me/gun
-- https://g3ru5bwxmezpuu3ktnoclbpiw4.srv.us/gun
-- https://5eh4twk2f62autunsje4panime.srv.us/gun
-- https://ojepkbvhx4ok25py2qw4hsa76y.srv.us/gun
-
-
-NOTE: IF YOU HAVE ANY RELAYS PLEASE EDIT THIS PAGE AND INFORM SO IT WILL BE VERY HELPFUL
-
-The gun-relays repo may be used in your application to return & use these results: github.com/draeder/gun-relays
+- https://shogun-relay.scobrudot.dev/gun
+- https://shogun-linda-relay.scobrudot.dev/gun
