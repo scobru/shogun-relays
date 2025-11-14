@@ -52,7 +52,7 @@
 
   // Get relays from GUN network or GitHub
   async function getRelays(options = {}) {
-    const defaultPeers = options.peers || ['https://peer.wallie.io/gun']
+    const defaultPeers = options.peers || ['https://shogun-relay.scobrudot.dev/gun', 'https://shogun-linda-relay.scobrudot.dev/gun']
 
     let gunRelays = []
 
@@ -117,7 +117,7 @@
 
   // Force update the relay list from GitHub
   async function forceListUpdate(options = {}) {
-    const defaultPeers = options.peers || ['https://peer.wallie.io/gun']
+    const defaultPeers = options.peers || ['https://shogun-relay.scobrudot.dev/gun', 'https://shogun-linda-relay.scobrudot.dev/gun']
 
     const newRelays = await fetchRelaysFromGitHub()
 

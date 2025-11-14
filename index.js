@@ -1,18 +1,10 @@
 import Gun from 'gun'
-import { ShogunCore } from 'shogun-core'
 import getUrls from 'get-urls'
 
-const DEFAULT_PEERS = [
-  'https://5eh4twk2f62autunsje4panime.srv.us/gun',
-  'https://peer.wallie.io/gun',
-  'https://g3ru5bwxmezpuu3ktnoclbpiw4.srv.us/gun',
-  'https://ojepkbvhx4ok25py2qw4hsa76y.srv.us/gun',
-]
+const DEFAULT_PEERS = ['https://shogun-relay.scobrudot.dev/gun', 'https://shogun-linda-relay.scobrudot.dev/gun']
 
 // Use native fetch in browser or node-fetch in Node.js if needed
-const fetchImpl = typeof window !== 'undefined' ? window.fetch : 
-  (typeof global.fetch !== 'undefined' ? global.fetch : 
-    (async () => (await import('node-fetch')).default)())
+const fetchImpl = typeof window !== 'undefined' ? window.fetch : typeof global.fetch !== 'undefined' ? global.fetch : (async () => (await import('node-fetch')).default)()
 
 // Suppress extraneous GUN logging
 let cl = console.log
@@ -22,11 +14,9 @@ console.log = () => {}
 async function fetchRelays() {
   // Ensure fetch is available
   const myFetch = typeof fetchImpl === 'function' ? fetchImpl : await fetchImpl
-  
+
   let tmpRelays = []
-  let res = await myFetch(
-    'https://raw.githubusercontent.com/scobru/shogun-relays/main/volunteer.dht.md'
-  )
+  let res = await myFetch('https://raw.githubusercontent.com/scobru/shogun-relays/main/volunteer.dht.md')
   let data = await res.text()
   let urls = getUrls(data)
 
@@ -45,14 +35,10 @@ async function fetchRelays() {
 const Relays = async () => {
   let gunRelays = []
 
-  let shogun = new ShogunCore({
-    gunOptions: {
-      peers: DEFAULT_PEERS,
-      file: 'gun-relays',
-    }
+  let gun = new Gun({
+    peers: DEFAULT_PEERS,
+    file: 'gun-relays',
   })
-
-  let gun = shogun.gun;
 
   // check gun first
   let results = await gun
@@ -80,10 +66,10 @@ export const forceListUpdate = async () => {
     gunOptions: {
       peers: DEFAULT_PEERS,
       file: 'gun-relays',
-    }
+    },
   })
-  
-  let gun = shogun.gun;
+
+  let gun = shogun.gun
 
   const newRelays = await fetchRelays()
 
