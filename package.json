@@ -1,6 +1,6 @@
 {
   "name": "shogun-relays",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Returns volunteer GUN relays for use in your decentralized apps.",
   "keywords": [
     "gundb",
