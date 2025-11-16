@@ -1,6 +1,3 @@
-- https://peer.wallie.io/gun
-- https://gun.defucc.me/gun
 - https://shogun-relay.scobrudot.dev/gun
 - https://shogun-linda-relay.scobrudot.dev/gun
-- https://a.talkflow.team/gun
 
