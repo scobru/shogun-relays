@@ -75,6 +75,7 @@
         peers: defaultPeers,
         localStorage: options.localStorage !== false,
         radisk: options.radisk !== false,
+        file: 'gun-relays',
       })
 
       // Try to get relays from Gun network
@@ -127,6 +128,7 @@
         peers: defaultPeers,
         localStorage: options.localStorage !== false,
         radisk: options.radisk !== false,
+        file: 'gun-relays',
       })
 
       gun.get('gun-relays').get('relays').put(JSON.stringify(newRelays))
