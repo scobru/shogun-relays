@@ -62,14 +62,10 @@ const Relays = async () => {
 }
 
 export const forceListUpdate = async () => {
-  let shogun = new ShogunCore({
-    gunOptions: {
-      peers: DEFAULT_PEERS,
-      file: 'gun-relays',
-    },
+  let gun = new Gun({
+    peers: DEFAULT_PEERS,
+    file: 'gun-relays',
   })
-
-  let gun = shogun.gun
 
   const newRelays = await fetchRelays()
 
