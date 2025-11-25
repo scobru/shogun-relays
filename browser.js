@@ -26,8 +26,8 @@
   // Fetch relays from GitHub
   async function fetchRelaysFromGitHub() {
     try {
-      const response = await fetch('https://raw.githubusercontent.com/scobru/shogun-relays/main/volunteer.dht.md')
-      const data = await response.text()
+      let response = await fetch('https://github.com/amark/gun/wiki/volunteer.dht')
+      let data = await response.text()
       const urls = extractUrls(data)
 
       const relays = []
