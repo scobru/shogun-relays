@@ -26,7 +26,19 @@
   // Fetch relays from GitHub
   async function fetchRelaysFromGitHub() {
     try {
-      const response = await fetch('https://raw.githubusercontent.com/scobru/shogun-relays/main/volunteer.dht.md')
+      const response = await fetch('https://raw.githubusercontent.com/scobru/shogun-relays/main/volunteer.dht.md', {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        headers: {
+          'Accept': 'text/plain',
+        }
+      })
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const data = await response.text()
       const urls = extractUrls(data)
 
@@ -45,7 +57,12 @@
 
       return relays
     } catch (error) {
-      console.error('Error fetching relays from GitHub:', error)
+      // Only log as warning if it's a network/CORS issue, not a critical error
+      if (error instanceof TypeError && error.message === 'Failed to fetch') {
+        console.warn('Unable to fetch relays from GitHub (network/CORS issue). Using default relays.')
+      } else {
+        console.warn('Error fetching relays from GitHub:', error.message || error)
+      }
       return []
     }
   }
