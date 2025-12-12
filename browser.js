@@ -40,6 +40,7 @@
       }
       
       const data = await response.text()
+
       const urls = extractUrls(data)
 
       const relays = []

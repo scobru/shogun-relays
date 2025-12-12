@@ -16,7 +16,7 @@ async function fetchRelays() {
   const myFetch = typeof fetchImpl === 'function' ? fetchImpl : await fetchImpl
 
   let tmpRelays = []
-  let res = await myFetch('https://raw.githubusercontent.com/scobru/shogun-relays/main/volunteer.dht.md')
+  let res = await myFetch('https://github.com/amark/gun/wiki/volunteer.dht')
   let data = await res.text()
   let urls = getUrls(data)
 
