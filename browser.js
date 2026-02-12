@@ -13,8 +13,9 @@
  *   </script>
  */
 
-;(function (window) {
+; (function (window) {
   'use strict'
+  console.log("ShogunRelays fixed version loaded")
 
   // Extract URLs from text (simplified version of get-urls)
   function extractUrls(text) {
@@ -26,7 +27,7 @@
   // Fetch relays from GitHub
   async function fetchRelaysFromGitHub() {
     try {
-      const response = await fetch('https://raw.githubusercontent.com/scobru/shogun-relays/main/volunteer.dht.md', {
+      const response = await fetch('https://raw.githubusercontent.com/wiki/amark/gun/volunteer.dht.md', {
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
@@ -34,11 +35,11 @@
           'Accept': 'text/plain',
         }
       })
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
-      
+
       const data = await response.text()
 
       const urls = extractUrls(data)
@@ -48,6 +49,7 @@
         try {
           const testUrl = new URL(url)
           // Only include URLs ending with /gun and not containing ~~
+          // In the markdown file, we might get clean URLs, but keeping the check is safe
           if (testUrl.pathname === '/gun' && url.indexOf('~~') === -1) {
             relays.push(testUrl.href)
           }
@@ -58,26 +60,21 @@
 
       return relays
     } catch (error) {
-      // Only log as warning if it's a network/CORS issue, not a critical error
-      if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        console.warn('Unable to fetch relays from GitHub (network/CORS issue). Using default relays.')
-      } else {
-        console.warn('Error fetching relays from GitHub:', error.message || error)
-      }
+      console.warn('Error fetching relays from GitHub:', error.message || error)
       return []
     }
   }
 
   // Get relays from GUN network or GitHub
   async function getRelays(options = {}) {
-    const defaultPeers = options.peers || ['https://shogun-relay.scobrudot.dev/gun', 'https://shogun-linda-relay.scobrudot.dev/gun']
+    const defaultPeers = options.peers || ['https://shogun-relay.scobrudot.dev/gun']
 
     let gunRelays = []
 
     // Suppress GUN logging temporarily
     const originalLog = console.log
     if (!options.verbose) {
-      console.log = () => {}
+      console.log = () => { }
     }
 
     try {
@@ -136,7 +133,7 @@
 
   // Force update the relay list from GitHub
   async function forceListUpdate(options = {}) {
-    const defaultPeers = options.peers || ['https://shogun-relay.scobrudot.dev/gun', 'https://shogun-linda-relay.scobrudot.dev/gun']
+    const defaultPeers = options.peers || ['https://shogun-relay.scobrudot.dev/gun']
 
     const newRelays = await fetchRelaysFromGitHub()
 

@@ -1,14 +1,14 @@
 import Gun from 'gun'
 import getUrls from 'get-urls'
 
-const DEFAULT_PEERS = ['https://shogun-relay.scobrudot.dev/gun', 'https://shogun-linda-relay.scobrudot.dev/gun']
+const DEFAULT_PEERS = ['https://shogun-relay.scobrudot.dev/gun']
 
 // Use native fetch in browser or node-fetch in Node.js if needed
 const fetchImpl = typeof window !== 'undefined' ? window.fetch : typeof global.fetch !== 'undefined' ? global.fetch : (async () => (await import('node-fetch')).default)()
 
 // Suppress extraneous GUN logging
 let cl = console.log
-console.log = () => {}
+console.log = () => { }
 
 // if gun has no results, fetch them from github & update gun
 async function fetchRelays() {
@@ -16,7 +16,7 @@ async function fetchRelays() {
   const myFetch = typeof fetchImpl === 'function' ? fetchImpl : await fetchImpl
 
   let tmpRelays = []
-  let res = await myFetch('https://github.com/amark/gun/wiki/volunteer.dht')
+  let res = await myFetch('https://raw.githubusercontent.com/wiki/amark/gun/volunteer.dht.md')
   let data = await res.text()
   let urls = getUrls(data)
 
