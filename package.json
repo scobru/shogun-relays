@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "get-urls": "^10.0.1",
-    "gun": "^0.2020.1241",
+    "gun": "@scobru/gun",
     "node-fetch": "^3.1.0"
   },
   "devDependencies": {}

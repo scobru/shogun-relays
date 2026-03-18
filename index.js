@@ -38,6 +38,8 @@ const Relays = async () => {
   let gun = new Gun({
     peers: DEFAULT_PEERS,
     file: 'gun-relays',
+    radisk: false,
+    localStorage: false,
   })
 
   // check gun first
@@ -65,6 +67,8 @@ export const forceListUpdate = async () => {
   let gun = new Gun({
     peers: DEFAULT_PEERS,
     file: 'gun-relays',
+    radisk: false,
+    localStorage: false,
   })
 
   const newRelays = await fetchRelays()
